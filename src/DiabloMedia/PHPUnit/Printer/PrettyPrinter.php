@@ -67,10 +67,9 @@ class PrettyPrinter extends \PHPUnit_TextUI_ResultPrinter implements \PHPUnit_Fr
         } else {
             if ($this->previousClassName !== $this->className) {
                 if ($this->previousTestName != null) {
-                    $this->write("\n");
+                    $this->write("\n\n");
                 }
 
-                $this->write("\n");
                 $this->writeWithColor('fg-blue', str_pad($this->className, 50, ' ', STR_PAD_LEFT).' ', false);
 
                 $this->previousTestName = null;
