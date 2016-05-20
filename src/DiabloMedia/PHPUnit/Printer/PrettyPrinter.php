@@ -5,7 +5,9 @@ namespace DiabloMedia\PHPUnit\Printer;
 class PrettyPrinter extends \PHPUnit_TextUI_ResultPrinter implements \PHPUnit_Framework_TestListener
 {
     protected $className;
+    protected $testName;
     protected $previousClassName;
+    protected $previousTestName;
     protected $timeColors;
 
     protected $defaultTimeColors = [
@@ -31,6 +33,8 @@ class PrettyPrinter extends \PHPUnit_TextUI_ResultPrinter implements \PHPUnit_Fr
     public function startTest(\PHPUnit_Framework_Test $test)
     {
         $this->className = get_class($test);
+        $this->testName = $test->getName(false);
+
         if (!$this->debug) {
             parent::startTest($test);
         }
@@ -62,10 +66,23 @@ class PrettyPrinter extends \PHPUnit_TextUI_ResultPrinter implements \PHPUnit_Fr
             ++$this->numTestsRun;
         } else {
             if ($this->previousClassName !== $this->className) {
+                if ($this->previousTestName != null) {
+                    $this->write("\n");
+                }
+
                 $this->write("\n");
-                $this->writeWithColor('fg-cyan', str_pad($this->className, 50, ' ', STR_PAD_LEFT).' ', false);
+                $this->writeWithColor('fg-blue', str_pad($this->className, 50, ' ', STR_PAD_LEFT).' ', false);
+
+                $this->previousTestName = null;
             }
+
+           if ($this->previousTestName !== $this->testName) {
+                $this->write("\n");
+                $this->writeWithColor('fg-magenta', str_pad($this->testName, 50, ' ', STR_PAD_LEFT).' ', false);
+            }
+
             $this->previousClassName = $this->className;
+            $this->previousTestName = $this->testName;
 
             if ($progress == '.') {
                 $this->writeWithColor('fg-green', $progress, false);
