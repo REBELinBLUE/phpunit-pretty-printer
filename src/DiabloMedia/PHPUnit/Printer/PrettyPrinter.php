@@ -70,14 +70,16 @@ class PrettyPrinter extends \PHPUnit_TextUI_ResultPrinter implements \PHPUnit_Fr
                     $this->write("\n\n");
                 }
 
-                $this->writeWithColor('fg-blue', str_pad($this->className, 50, ' ', STR_PAD_LEFT).' ', false);
+                //$this->writeWithColor('fg-blue', str_pad($this->className, 50, ' ', STR_PAD_LEFT).' ', false);
+                $this->writeWithColor('fg-blue', $this->className);
 
                 $this->previousTestName = null;
             }
 
            if ($this->previousTestName !== $this->testName) {
                 $this->write("\n");
-                $this->writeWithColor('fg-magenta', str_pad($this->testName, 50, ' ', STR_PAD_LEFT).' ', false);
+                //$this->writeWithColor('fg-magenta', str_pad($this->testName, 50, ' ', STR_PAD_LEFT).' ', false);
+                $this->writeWithColor('fg-magenta', $this->className);
             }
 
             $this->previousClassName = $this->className;
